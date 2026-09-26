@@ -1,6 +1,7 @@
 ---
 name: coherence-check
-description: Check that a text works for a reader who has nothing but the text: it stands on its own, its structure matches its content, it's curated and concise, and its claims are grounded and consistent. Use when asked to fix, clean up or tighten a text, or asked "does this make sense", "read this through", "sanity check" or "before I send this".
+description: >
+    Check that a text works for a reader who has nothing but the text: it stands on its own, its structure matches its content, it's curated and concise, and its claims are grounded and consistent. Use when asked to fix, clean up or tighten a text, or asked "does this make sense", "read this through", "sanity check" or "before I send this".
 ---
 
 # coherence-check
