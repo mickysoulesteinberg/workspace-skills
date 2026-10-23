@@ -41,7 +41,7 @@ They override this skill's defaults, the same way they do for `quest`. No file m
 
 ## What can be wrong, and what checks it
 
-Three properties. Coherence and legibility are one of them — comprehensibility — checked two ways, and the difference is who reads.
+Three properties. The third, comprehensibility, is checked two ways, and the difference is who reads.
 
 | Property | Check | Catches | Cannot catch |
 |---|---|---|---|
@@ -59,14 +59,18 @@ Each pass has its own trigger and its own cost. They are not a fixed bundle — 
 | Pass | Checks | Cost | Fires |
 |---|---|---|---|
 | **Checkpoint** | durability | seconds — no rules pack, no subagent, no full re-read | often; on request; before anything risky |
-| **Sweep** | comprehensibility (weak) | cheap | when Checkpoint wrote something |
+| **Sweep** | comprehensibility (weak) | cheap | when `current-state.md` changed since the last Checkpoint line in `timeline.md`, whoever changed it |
 | **Reconcile** | every file a pass wrote to has a Resources row | seconds | when a pass wrote to a file |
 | **Confirm** | truth | cheap | stopping, forking |
 | **Cold read** | comprehensibility (strong) | one read-only agent spawn | **opt-in** — offered, never automatic |
 
+**Has `current-state.md` changed?** Within the conversation, you know whether it was edited. After a resume or compaction, compare the file's last-modified time with the time on the latest Checkpoint line in `timeline.md`. With no Checkpoint line yet, treat the file as changed.
+
 **Stopping for the day** runs Checkpoint → Sweep → Reconcile → Confirm, then *offers* the cold read with its reason stated. That is the only named combination.
 
 **The user invokes this skill.** It never fires itself on a judgement that the session looks like it is winding down.
+
+**Report which checks ran.** Every pass's report names the checks it actually ran. A check that did not run is reported as skipped, with its reason — never described as a result. A check that reports without running turns an unknown into a false "passed".
 
 ## Checkpoint
 
@@ -92,7 +96,7 @@ The durability pass. Reads nothing, loads no pack, spawns nothing. Works from **
    | is a fact about an external file | `current-state.md` → Resources row |
    | is work out of scope for this session entirely | `followups.md` (`session-files.md` carries the "which later?" test) |
 
-   **The scope of this pass is the union of those homes** — nothing else is touched. Zero items means nothing is in scope and the pass is over in seconds. That is a successful outcome, not a failed one; say so and stop.
+   **The scope of this pass is the union of those homes** — nothing else is touched. Zero items means nothing is in scope and the pass is over in seconds. That is a successful outcome, not a failed one; say so and end the Checkpoint — not the run. Edits made as the work went never pass through Checkpoint, so go on to Sweep if its trigger holds.
 
 3. **Write into deliverables, not just `current-state.md`.** A deliverable's own content belongs in it. An agent does not rewrite the user's deliverables — but that rule protects their **authored** content from agent edits, and a decision the user and the agent just agreed to is not authored content, it is content the file is missing. How it lands depends on the file's declared ownership: `agent` files are written directly, `user` files get the proposed text surfaced and never a silent edit. `session-files.md` § Ownership carries both rules in full.
 
@@ -104,21 +108,23 @@ The durability pass. Reads nothing, loads no pack, spawns nothing. Works from **
 
    Naming the homes, not the items, keeps the line short while telling a resuming agent where to look. **A resumed or compacted session** — the one case where the agent was not present for the work — reads back to the most recent such line and enumerates from there.
 
-5. **Report what was written down.** The check has to be visible, or it is indistinguishable from not having run.
+5. **Report what was written down.**
 
 ## Sweep
 
 Runs `curation-rules.md`, scoped per rule. The rules do not all cost the same, so they do not all get the same scope.
 
-**`current-state.md` gets whole-file treatment whenever any of its sections were touched.** At ~50 lines it is cheap to take whole, and taking it whole is what catches a contradiction between two sections Checkpoint wrote to separately.
+**`current-state.md` gets whole-file treatment whenever any of its sections were touched.** At ~50 lines it is cheap to take whole, and taking it whole is what catches a contradiction between two sections written separately.
+
+**Run `/coherence-check` itself.** Reading the file and judging it clean is not the check — including when you wrote the file minutes ago. The author fills gaps from memory, which is exactly what the check exists to catch.
 
 | Rule | Scope | Why |
 |---|---|---|
 | `/coherence-check` | whole of `current-state.md` when any section was touched | cheap on a 50-line file; catches cross-section contradictions |
 | shorthand-grep | whole file, always | it is a grep |
-| one-home check | the homes Checkpoint wrote to | duplication can only be introduced by a write |
+| one-home check | sections that changed since the last Checkpoint | duplication can only be introduced by a write |
 | narrative compression, rewrite-stale-framing | text that changed | nothing else moved |
-| promote-or-delete on open items | items Checkpoint's enumeration bears on | the one genuinely expensive rule — it judges every open item individually |
+| promote-or-delete on open items | items that changes since the last Checkpoint bear on | the one genuinely expensive rule — it judges every open item individually |
 
 Log promote and delete outcomes to `timeline.md` per `curation-rules.md`. Never sweep `timeline.md` itself.
 
@@ -150,13 +156,13 @@ A bare "does this look right?" does not fix this. It is the same self-report tha
 2. Read the last handful of `timeline.md` entries and note which file in `$SESSION_DIR` was most recently touched.
 3. Compare. A next step that is already done, or that points somewhere the recent activity does not support, is a mismatch.
 4. **Mismatch:** surface it concretely — "Goal says next is X; the last few `timeline.md` entries and the newest file in the dir are about Y" — and ask the user to resolve it. Fix `current-state.md` to match their answer.
-5. **No mismatch:** do not interrupt the user with a routine confirm. The check passed silently, the same way a passing test does not announce itself.
+5. **No mismatch:** do not interrupt the user with a routine confirm. Say in one line of the report that Confirm ran and found no mismatch; no question to the user.
 
 ## Cold read
 
 `cold-read.md`. This skill's declared question: **what is the current goal, and what is the next step?** Hand over `current-state.md` alone — no other session files.
 
-**Opt-in.** Offer it with the reason stated rather than firing it or waiting to be asked — "eleven items landed this pass and three of them only exist in prose I wrote; worth a cold read before you stop?" The item count from Checkpoint is the signal: two items do not need it, eleven probably do.
+**Opt-in.** Offer it with the reason stated rather than firing it or waiting to be asked — "eleven items landed this pass and three of them only exist in prose I wrote; worth a cold read before you stop?" How much of `current-state.md` changed since the last Checkpoint is the signal, whether Checkpoint or the work wrote it: two small edits do not need it, eleven probably do.
 
 Run it **after** every pass that can still edit `current-state.md`. It is the most expensive step available here, so an edit landing behind it costs a second full spawn, not just a stale verdict.
 

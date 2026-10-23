@@ -58,7 +58,7 @@ It matters most when the invocation arrives from a different project's working d
 
 **Default is always a new session.** Continuation only happens when the user explicitly names a specific existing dir — by name or by path (see the detections above). The bootstrap script never decides this: it always creates a new dir. If the user doesn't name a dir, run bootstrap. The only question to ask first is which project, when that's unclear (**Which project** above) — not Claude usage or cost (see **`session.yml` fields** below) — and don't list other open session dirs.
 
-Once the session dir is set, proceed immediately to any work the user expressed alongside the invocation. Do not ask about session goals or what the user wants to work on — if intent was clear from their message, act on it.
+Once the session dir is set, pick up from what the user said alongside the invocation. Don't ask them to restate goals they already gave.
 
 **New session path:** Run bootstrap with `--root`, plus `--slug` when a name was derived.
 
