@@ -20,6 +20,8 @@ The consequence to accept, rather than fix: the origin keeps pointing at work th
 
 5. **Move artifacts.** Move whatever obviously belongs with the fork into the new `$SESSION_DIR` now — a durable relocation, not a duplicate copy, done as a quick pass. Ask the user directly on anything unclear rather than guessing or deferring it — the fork is happening because a real decision is already being made, and **nothing downstream cleans up after this step.** No later pass re-triages either session until each session's own close-out. Overlap between the two sessions is fine: each artifact goes wherever it's needed. There is no fork-versus-stay rule to apply beyond that.
 
+   **Ownership of work the child will generate.** For artifacts or note streams the child will produce after the fork (drafting notes, design input, ticket prose), name in the child's Context or Rules which session owns *acting on* them — origin or child.
+
 6. **Write the child's `current-state.md`.** The editorial half: Context, Goal, Where we are, Rules, and Resources, drawn from what is forking off. Context names the origin: its folder, and its project when that differs from the child's. Load `curation-rules.md` (in this folder) for the writing conventions.
 
    **Before writing it, scan the origin's own open-item files** — its backlog / improvements / followups files, whatever they are named — for items whose subject falls inside the fork's stated scope, and carry those forward as named candidate work. A fork's scope is everything the origin session *knew* that belongs to it, not only the items its prose happened to call out. Nothing downstream catches a miss here: the check in step 7 tests whether a cold reader can state the goal and next step, not whether the scope list is complete.
@@ -35,6 +37,8 @@ The consequence to accept, rather than fix: the origin keeps pointing at work th
 ## After fork — origin session default
 
 When a fork completes, **stay in the origin session** and continue its work in this chat. The user opens a **new chat** themselves when they're ready to work the fork — do not switch context to the child here, and do not offer "do the fork work here vs continue triage" as equivalent options.
+
+**Live sibling sessions.** Read or cite another `_current-*/` freely. Move, edit, or delete its files from this chat only with the user's explicit yes.
 
 **Agent closing line:** report the fork session ID, note what the fork owns, state the origin's **next step** — then proceed (or wait on the user) on origin work only.
 

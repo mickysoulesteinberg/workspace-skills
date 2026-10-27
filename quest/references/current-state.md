@@ -8,7 +8,7 @@
 
 ## Goal / definition of done
 
-<!-- Rewrite in place. Status: open | met-proposed | met-confirmed. Last updated: YYYY-MM-DD. Owns the ask success criteria (DoD). Stays broad, like acceptance criteria — changes rarely, rough guideline of 1-5 bullets. Small sub-tasks go in "Come back to" at the bottom, not stacked here. -->
+<!-- Rewrite in place. Last updated: YYYY-MM-DD. Owns the ask success criteria (DoD). Stays broad, like acceptance criteria — changes rarely, rough guideline of 1-5 bullets. Goal has no status field. Small DoD sub-tasks go in "Come back to" at the bottom. When designing a skill/convention, put design gaps in the design/plan (or Goal). -->
 
 ## Where we are
 
