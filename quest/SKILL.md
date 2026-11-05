@@ -68,7 +68,7 @@ python3 ${CLAUDE_SKILL_DIR}/scripts/session-bootstrap.py --root "$ROOT" [--slug 
 
 Put the actual project root in place of `$ROOT`, quoted (paths can contain spaces). Read the output, extract the slug, confirm the dir was created. Set `$SESSION_DIR`.
 
-**The script always creates.** It makes `_current-HHMM-<slug>/` with `--slug`, or `_current-HHMM-<color>-<animal>/` without it (suffix `-2`, `-3`, … if that dir already exists), and records the unprefixed name as `name` in `session.yml`. It lists other open dirs as an FYI but never joins one. The only way to continue an existing dir is for the user to name it in the invocation — see the detections above.
+**The script always creates.** It makes `_current-MMDD-<slug>/` with `--slug`, or `_current-MMDD-<color>-<animal>/` without it (suffix `-2`, `-3`, … if that dir already exists), and records the unprefixed name as `name` in `session.yml`. It lists other open dirs as an FYI but never joins one. The only way to continue an existing dir is for the user to name it in the invocation — see the detections above.
 
 **Resuming path:** Use the named dir as `$SESSION_DIR`. Read `session.yml` and **`current-state.md`** (live truth), then each file its Resources table marks `every time` — and no others until the work needs them. Do **not** load `timeline.md` unless troubleshooting or the user asks. Do not run bootstrap.
 
@@ -88,13 +88,13 @@ Hold this rule throughout the session: anything the user asks you to remember, a
 - **`## Rules`:** Standing instructions for how to work in this session. A rule stays until the user drops it.
 - **`## Come back to`:** Small sub-tasks of the DoD worth not losing — not full deliverable phases (`followups.md` is for work out of scope for this session entirely). New items go at the bottom and work starts from the top, unless the user says otherwise. `tidy-quest`'s Sweep applies promote-or-delete to the items its Checkpoint bears on; age in this list is not a signal.
 
-**`timeline.md`:** Append one dated line only on durable changes (decision/resource/milestone / explicit "update for later"). Do not put rules or current truth here — permanent, never deleted by any skill at any point in the session's life.
+**`timeline.md`:** Append one dated line only on durable changes (decision/resource/milestone / explicit "update for later"). When a durable decision is written into `current-state.md`, append the timeline line in the **same turn** — do not wait for `tidy-quest` or a fork. Checkpoint remains the backstop for decisions still only in conversation. Do not put rules or current truth here — permanent, never deleted by any skill at any point in the session's life.
 
 **`followups.md`:** Real work explicitly out of scope for finishing *this* session — not this deliverable's own later phases. See `references/session-files.md` for the full "which later?" test; getting this wrong looks correct in either file at the time, so check that reference rather than guessing when the horizon is ambiguous.
 
 **Legacy `session-notes.md`:** If a session still has `session-notes.md` and lacks `current-state.md`, on first touch **fold** any `## Current state` (or equivalent) into `current-state.md`; move leftover narrative into `timeline.md` as one dated block **or** rename to `session-notes.archive.md` as non-truth archive. Do not keep dual truth. Session-notes are never the home for Goal.
 
-**Mid-session note-taking:** Prefer updating `current-state.md` (and a timeline line when durable). Do not treat session notes as an append-only debate log.
+**Mid-session note-taking:** Prefer updating `current-state.md`, and when that write is a durable decision, append the timeline line in the same turn. Do not treat session notes as an append-only debate log.
 
 **Mid-session tasks:** When the user asks to "add a task" or "note that for later," hold it in context and include it at close-out. Do not park tasks only in `timeline.md`. If tasks accumulate and there's real risk of losing them before close-out, note them under `## Come back to` in `current-state.md`.
 

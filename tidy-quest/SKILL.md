@@ -6,7 +6,7 @@ description: >
   decided), Sweep (curation rules and coherence), Reconcile (Resources rows), Confirm (is the stated
   next step true), and an opt-in cold read for when the file is about to be left for a stranger.
 when_to_use: >
-  Manual only. Use for /tidy-quest, or when the user says they'll continue the quest later and want
+  Use for /tidy-quest, or when the user says they'll continue the quest later and want
   a clean hand-off. NOT for starting, continuing or forking a session (quest) or closing one out.
 allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/../quest/scripts/session-bootstrap.py *)
 ---
@@ -156,7 +156,8 @@ A bare "does this look right?" does not fix this. It is the same self-report tha
 2. Read the last handful of `timeline.md` entries and note which file in `$SESSION_DIR` was most recently touched.
 3. Compare. A next step that is already done, or that points somewhere the recent activity does not support, is a mismatch.
 4. **Mismatch:** surface it concretely — "Goal says next is X; the last few `timeline.md` entries and the newest file in the dir are about Y" — and ask the user to resolve it. Fix `current-state.md` to match their answer.
-5. **No mismatch:** do not interrupt the user with a routine confirm. Say in one line of the report that Confirm ran and found no mismatch; no question to the user.
+5. **Every-time agent files.** For each Resources row with When to read = `every time` and Owner = `agent`, check only **done / in-progress / next** claims in that file against `current-state.md`'s Where we are and Context — not a whole-file skim. Clear contradiction → update the agent-owned file and say so in the report. Ambiguous → ask, same as step 4. No such rows, or clean → one report line; do not interrupt the user.
+6. **No mismatch (steps 1–4) and step 5 clean or skipped:** do not interrupt the user with a routine confirm. Say in one line of the report that Confirm ran and found no mismatch; no question to the user.
 
 ## Cold read
 

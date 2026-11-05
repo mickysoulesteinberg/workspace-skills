@@ -8,7 +8,7 @@
 
 ## Goal / definition of done
 
-<!-- Rewrite in place. Status: open | met-proposed | met-confirmed. Last updated: YYYY-MM-DD. Owns the ask success criteria (DoD). Stays broad, like acceptance criteria — changes rarely, rough guideline of 1-5 bullets. Small sub-tasks go in "Come back to" at the bottom, not stacked here. -->
+<!-- Rewrite in place. Last updated: YYYY-MM-DD. Owns the ask success criteria (DoD). Stays broad, like acceptance criteria — changes rarely, rough guideline of 1-5 bullets. Goal has no status field. Small DoD sub-tasks go in "Come back to" at the bottom. When designing a skill/convention, put design gaps in the design/plan (or Goal). -->
 
 ## Where we are
 
@@ -22,7 +22,7 @@
 
 When the user points at a file (or a pass writes to a session file), add or update a row below. **primary** = source of truth; **derived** = agent-made summary/extract — re-check against primary if unsure. **Owner** = `agent` (agent maintains it, write directly) / `user` (the user authors it, propose don't edit) / empty for external references. **When to read** = `every time` (a resuming agent reads it right after this file) / `if relevant` (the default — read it only when the work needs it). See the `quest` skill's `references/session-files.md`.
 
-Paths here are **repo-root-relative**, never absolute `$HOME`-rooted — this doc may be read on another machine, where both the username and the parent folder differ.
+Paths here are **repo-root-relative**, never absolute `$HOME`-rooted — this doc may be read on another machine, where both the username and the parent folder differ. When another repo is in play, write `<repo-name>/<path from that repo's root>`; an unprefixed path means this session's project.
 
 | Resource | Kind | Owner | When to read | Provenance | How to use |
 |----------|------|-------|--------------|------------|------------|

@@ -32,8 +32,8 @@ The frontmatter is read only when its opening `---` is the file's first line. Fi
 | `name` | The command name. Claude Code defaults it to the folder name; other surfaces require it. At most 64 characters, lowercase letters, numbers, and hyphens only, and it can't contain "anthropic" or "claude" | Every skill |
 | `description` | What the skill does and when to use it. Claude chooses ambient skills from it | Every skill |
 | `when_to_use` | Extra trigger phrases or example requests, appended to `description` in the list Claude chooses from | Ambient skills whose triggers don't fit in `description` |
-| `disable-model-invocation: true` | Makes the skill manual; its description is removed from Claude's context | Most skills, and any skill with side effects or timing you want to control |
-| *(omit `disable-model-invocation`)* | Makes the skill ambient. Omitting the key is how to say this — writing `false` is not needed | Skills meant to run without a slash command |
+| `disable-model-invocation: true` | Makes the skill manual; its description is removed from Claude's context | Skills with side effects or timing you want to control |
+| *(omit `disable-model-invocation`)* | Makes the skill ambient. Omitting the key is how to say this — writing `false` is not needed | Every other skill (the default) |
 | `user-invocable: false` | Only Claude can invoke the skill: it's hidden from the `/` menu, and typing `/name` doesn't run it | Background knowledge that isn't a meaningful command |
 | `argument-hint` | Autocomplete hint for expected arguments, such as `[issue-number]`. The body reads them through `$ARGUMENTS` | Skills that take input |
 | `allowed-tools` | Tools Claude may use without asking, during the turn that invokes the skill | Skills that run the same commands every time |
@@ -41,7 +41,7 @@ The frontmatter is read only when its opening `---` is the file's first line. Fi
 
 Claude Code accepts more fields than these; its skills documentation (code.claude.com/docs/en/skills) lists them all. Outside Claude Code (claude.ai uploads, the Skills API), only `name`, `description`, `license`, `compatibility`, `metadata`, and `allowed-tools` are allowed, and any other field makes the upload fail.
 
-**Manual vs ambient:** default to manual unless the skill is meant to be ambient. When designing a skill with the user, present both options — the default is a suggestion, not policy.
+**Manual vs ambient:** default to ambient. Choose manual when the skill has side effects or timing the user would want to control, such as writing to Jira or Confluence, sending messages, or deleting files. Ask the user only when it is unclear which side a skill falls on.
 
 **Every description:** third person ("Processes X", not "I can help you…"), says what the skill does and when to use it, at most 1,024 characters, no XML tags.
 

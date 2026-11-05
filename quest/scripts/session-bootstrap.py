@@ -13,14 +13,14 @@ Modes:
   (<root>/.agents/skill-settings/quest.md) and exits without touching disk.
   `quest` runs it as soon as it knows the project; `tidy-quest` runs it
   before its passes.
-- Default: dir is `_current-<HHMM>-<color-animal>/`.
-- Named: `--slug NAME` -> dir is `_current-<HHMM>-<NAME>/` (suffix `-2`,
+- Default: dir is `_current-<MMDD>-<color-animal>/`.
+- Named: `--slug NAME` -> dir is `_current-<MMDD>-<NAME>/` (suffix `-2`,
   `-3`, … on collision). Lets a session get a descriptive name instead of a
   random color-animal pair whenever the agent already knows what it's about.
 
 Either way session.yml records `name` (NAME, or the color-animal pair) so a
-session can be found by name without parsing the folder name. HHMM is the
-computer's local time.
+session can be found by name without parsing the folder name. MMDD is the
+computer's local month and day (no year).
 
 There is no automatic reuse: this script always creates a new dir.
 Continuation is resolved by the calling skill (quest) *before* this script
@@ -38,11 +38,11 @@ Optional args (any order):
   --help, -h           Print this usage and exit. Never touches disk.
   --show-settings      Print the project's settings file and exit. Never
                        touches disk.
-  --slug NAME          Named dir `_current-<HHMM>-<NAME>/`; never reuses.
+  --slug NAME          Named dir `_current-<MMDD>-<NAME>/`; never reuses.
   --forked-from PATH   Fork provenance: writes `forked_from: "PATH"` into this
                        (child) session's session.yml. PATH is the origin
                        session's folder, prefixed with its project folder's
-                       name (e.g. `my-project/logs/agent-sessions/_current-1508-foo`).
+                       name (e.g. `my-project/logs/agent-sessions/_current-1103-foo`).
                        Nothing updates it later, so it goes stale when the
                        origin is closed out and renamed; the slug inside it
                        still identifies the origin.
@@ -54,7 +54,7 @@ Example:
 
   python3 session-bootstrap.py --root ~/projects/my-project \
       --slug fork-skill-patches \
-      --forked-from my-project/logs/agent-sessions/_current-1433-api-cleanup
+      --forked-from my-project/logs/agent-sessions/_current-1103-api-cleanup
 """
 
 from __future__ import annotations
@@ -135,9 +135,9 @@ def random_word_pair() -> str:
     return f"{random.choice(COLORS)}-{random.choice(ANIMALS)}"
 
 
-def hhmm_local() -> str:
-    """Return HHMM in the computer's local time."""
-    return dt.datetime.now().strftime("%H%M")
+def mmdd_local() -> str:
+    """Return MMDD in the computer's local time (month and day, no year)."""
+    return dt.datetime.now().strftime("%m%d")
 
 
 def find_stale_current_dirs(log_root: Path) -> list[Path]:
@@ -195,13 +195,13 @@ def find_open_session_dirs(log_root: Path) -> list[Path]:
     ]
 
 
-def unique_named_session_dir(log_root: Path, hhmm: str, name: str) -> tuple[Path, str]:
+def unique_named_session_dir(log_root: Path, mmdd: str, name: str) -> tuple[Path, str]:
     """Return (dir, slug) for a new named session.
 
-    First try HHMM-NAME; if `_current-HHMM-NAME/` exists, suffix -2, -3, …
+    First try MMDD-NAME; if `_current-MMDD-NAME/` exists, suffix -2, -3, …
     Never reuses or overwrites an existing dir.
     """
-    base = f"{hhmm}-{name}"
+    base = f"{mmdd}-{name}"
     slug = base
     n = 2
     while True:
@@ -316,20 +316,19 @@ def main() -> int:
     # Sessions are never auto-reused here. Continuation is resolved by the
     # calling skill (quest) before it ever invokes this script -- if the user
     # named an existing dir, the skill uses it directly and skips bootstrap
-    # entirely. This always creates.
-    hhmm = hhmm_local()
+    # entirely. This always creates. Both paths use unique_named_session_dir
+    # so same-day collisions get -2, -3, … (likelier under MMDD than HHMM).
+    mmdd = mmdd_local()
     if custom_slug:
         name = custom_slug
-        session_dir, slug = unique_named_session_dir(agent_sessions, hhmm, name)
-        if slug != f"{hhmm}-{name}":
-            sys.stdout.write(
-                f"[session-bootstrap] slug collision: using {session_dir.name}/ "
-                f"(left _current-{hhmm}-{name}/ untouched)\n"
-            )
     else:
         name = random_word_pair()
-        slug = f"{hhmm}-{name}"
-        session_dir = agent_sessions / f"_current-{slug}"
+    session_dir, slug = unique_named_session_dir(agent_sessions, mmdd, name)
+    if slug != f"{mmdd}-{name}":
+        sys.stdout.write(
+            f"[session-bootstrap] slug collision: using {session_dir.name}/ "
+            f"(left _current-{mmdd}-{name}/ untouched)\n"
+        )
 
     others = find_open_session_dirs(agent_sessions)
     if others:

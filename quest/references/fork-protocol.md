@@ -14,11 +14,15 @@ The consequence to accept, rather than fix: the origin keeps pointing at work th
 
 2. **Propose a descriptive slug** for the new session, drawn from the tangent's actual topic — same judgment as Bootstrap's descriptive-slug detection (including any naming rule in the project's settings), but naming the fork's topic, not the origin's. No extra approval prompt needed for the name itself.
 
-3. **Run bootstrap** with `--root <project> --slug <new-slug> --forked-from <origin path>`. The origin path is the origin's folder, prefixed with its project folder's name (e.g. `my-project/logs/agent-sessions/_current-1508-foo`). The child goes in the same project as the origin unless the user names a different one; if it's a different project, print that project's settings first (Bootstrap's **Project settings** step). This creates the new `_current-*/` dir and writes `forked_from` into its `session.yml`.
+3. **Run bootstrap** with `--root <project> --slug <new-slug> --forked-from <origin path>`. The origin path is the origin's folder, prefixed with its project folder's name (e.g. `my-project/logs/agent-sessions/_current-1103-foo`). The child goes in the same project as the origin unless the user names a different one; if it's a different project, print that project's settings first (Bootstrap's **Project settings** step). This creates the new `_current-*/` dir and writes `forked_from` into its `session.yml`.
 
-4. **Note the fork in the origin's `timeline.md`:** one dated line naming the child's folder, with its project when that differs from the origin's (e.g. `- 2026-03-14 — Forked the API cleanup into <project>/logs/agent-sessions/_current-1508-api-cleanup/.`). See "Where a fork came from" below.
+4. **Note the fork in the origin's `timeline.md`:** one dated line naming the child's folder, with its project when that differs from the origin's (e.g. `- 2026-03-14 — Forked the API cleanup into <project>/logs/agent-sessions/_current-1103-api-cleanup/.`). See "Where a fork came from" below.
 
 5. **Move artifacts.** Move whatever obviously belongs with the fork into the new `$SESSION_DIR` now — a durable relocation, not a duplicate copy, done as a quick pass. Ask the user directly on anything unclear rather than guessing or deferring it — the fork is happening because a real decision is already being made, and **nothing downstream cleans up after this step.** No later pass re-triages either session until each session's own close-out. Overlap between the two sessions is fine: each artifact goes wherever it's needed. There is no fork-versus-stay rule to apply beyond that.
+
+   **Shared living file.** When one file still holds both finished record and work in progress that both sessions need, offer splitting finished vs still-worked into separate files before moving — do not move the whole file by default, and do not mandate a split on every fork.
+
+   **Ownership of work the child will generate.** For artifacts or note streams the child will produce after the fork (drafting notes, design input, ticket prose), name in the child's Context or Rules which session owns *acting on* them — origin or child.
 
 6. **Write the child's `current-state.md`.** The editorial half: Context, Goal, Where we are, Rules, and Resources, drawn from what is forking off. Context names the origin: its folder, and its project when that differs from the child's. Load `curation-rules.md` (in this folder) for the writing conventions.
 
@@ -35,6 +39,8 @@ The consequence to accept, rather than fix: the origin keeps pointing at work th
 ## After fork — origin session default
 
 When a fork completes, **stay in the origin session** and continue its work in this chat. The user opens a **new chat** themselves when they're ready to work the fork — do not switch context to the child here, and do not offer "do the fork work here vs continue triage" as equivalent options.
+
+**Live sibling sessions.** Read or cite another `_current-*/` freely. Move, edit, or delete its files from this chat only with the user's explicit yes.
 
 **Agent closing line:** report the fork session ID, note what the fork owns, state the origin's **next step** — then proceed (or wait on the user) on origin work only.
 
