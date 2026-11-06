@@ -17,7 +17,7 @@ Skip `/tidy-quest` entirely. The cost is that a new chat may have to work harder
 For work that stretches over a week or more, or that you might hand to someone else.
 
 1. `/quest` to start.
-2. Before each break, `/tidy-quest I'll pick this up tomorrow`. Accept the cold read before a long break, or before handing the work to someone else. In a cold read, a second agent that hasn't seen your chat reads only the notes and says back the goal and next step, which shows whether a stranger could follow them.
+2. Before each break, `/tidy-quest I'll pick this up tomorrow`. Ask for a cold read before a long break, or before handing the work to someone else, if tidy-quest didn't run one. In a cold read, a second agent that hasn't seen your chat reads only the notes and says back the goal and next step, which shows whether a stranger could follow them.
 3. Each day, `/quest <name>` in a fresh chat. Check the agent's summary of where things stand before carrying on.
 4. `/close-quest` at the end.
 
@@ -28,7 +28,7 @@ When a side question turns out to deserve real work of its own.
 1. Mid-chat, say "split this off into its own quest." The agent creates a second session folder for the tangent, with its own notes.
 2. Keep going on the original quest in this chat.
 3. When you're ready, open a new chat and type `/quest <tangent's name>` to work on the tangent.
-4. Close each one separately with `/close-quest` when it's done. If you close the original first, the agent updates the tangent's link back to it, or asks if it can't tell which tangent is meant.
+4. Close each one separately with `/close-quest` when it's done. If you close the original first, the agent updates the tangent's link back to it.
 
 ## Checking writing before it goes out
 

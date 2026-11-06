@@ -75,7 +75,7 @@ A claim resolved by external research needs its actual source cited at the claim
 
 ## Pre-close checklist doesn't accumulate crossed-off items
 
-The list of things that need to happen before this session can close should only ever contain things that still need to happen. When something's done, it doesn't stay on the list checked off — it's either deleted outright, or, if it's worth remembering, promoted into a Decision the same way any other resolved item would be.
+The list of things that need to happen before this session can close should only ever contain things that still need to happen. When something's done, it doesn't stay on the list checked off — it's either deleted outright, or, if it's worth remembering, promoted into Context the same way any other resolved item would be.
 
 ## Status tags on open items, not just prose
 

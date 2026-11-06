@@ -8,7 +8,7 @@
 
 ## Goal / definition of done
 
-<!-- Rewrite in place. Last updated: YYYY-MM-DD. Owns the ask success criteria (DoD). Stays broad, like acceptance criteria — changes rarely, rough guideline of 1-5 bullets. Goal has no status field. Small DoD sub-tasks go in "Come back to" at the bottom. When designing a skill/convention, put design gaps in the design/plan (or Goal). -->
+<!-- Rewrite in place. Last updated: YYYY-MM-DD. The quest's own DoD, from what the user says it's for. Stays broad, like acceptance criteria — changes rarely, rough guideline of 1-5 bullets. Goal has no status field. Small DoD sub-tasks go in "Come back to" at the bottom. When designing a skill/convention, put design gaps in the design/plan (or Goal). -->
 
 ## Where we are
 

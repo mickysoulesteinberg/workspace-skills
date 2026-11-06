@@ -120,6 +120,7 @@ Below the summary, list:
 
 - **Tasks to close elsewhere** from Step 2, each with its file, if any.
 - **Supplement applied:** the draft additions you carried out, or "none" when `close-quest.md` has no such section. This shows the user whether the project's additions ran.
+- **To weigh in on:** anything the user might want to weigh in on before closing, such as a question that never got a clear answer, if any. Flag it rather than assume it doesn't matter.
 
 ⛔ **Stop.** Ask "Does this look right?" and wait for approval. The approval covers the summary, the tasks to close, and every item the draft additions put in front of the user.
 
@@ -130,7 +131,7 @@ Below the summary, list:
 1. Note `session.yml`'s `slug` for item 4, then delete `session.yml`, `current-state.md`, `session-notes.md` and `followups.md` from `$SESSION_DIR`, whichever exist.
 2. Rename `$SESSION_DIR` to the final location. The new name uses the descriptive slug from Step 4, not the slug in `session.yml`.
 3. Write the summary into the final location.
-4. **Repoint a live fork.** Search every open `$ROOT/logs/agent-sessions/_current-*/session.yml` for a `forked_from` naming this session: the bare slug, or a path ending in `/_current-<slug>`. With exactly one such hit, set its `forked_from` to this session's final location, written as the project's settings say links are written (a path relative to `$ROOT` otherwise), and report it in one line. With several hits, or a `forked_from` in any other form, ask. No hits is the common case; say so in one line.
+4. **Repoint live forks.** Search every open `$ROOT/logs/agent-sessions/_current-*/session.yml` for a `forked_from` naming this session: the bare slug, or a path ending in `/_current-<slug>`. For each such hit, set its `forked_from` to this session's final location, written as the project's settings say links are written (a path relative to `$ROOT` otherwise), and report it in one line. No hits is the common case; say so in one line.
 5. Mark done the tasks elsewhere the user approved, in the project's task format.
 6. Read the `## After write` section of `close-quest.md`, if there is one, and carry out each item.
 

@@ -46,4 +46,4 @@ When a fork completes, **stay in the origin session** and continue its work in t
 
 ## Where a fork came from
 
-A fork is recorded three ways: the child's `session.yml` `forked_from` names the origin's folder (step 3), the child's Context names the origin in prose (step 6), and the origin's `timeline.md` names the child (step 4). None of them is updated later. When either session is closed out and its folder renamed, the pointers to it go stale but stay readable — the slug inside each one still identifies the session — and that is accepted.
+A fork is recorded three ways: the child's `session.yml` `forked_from` names the origin's folder (step 3), the child's Context names the origin in prose (step 6), and the origin's `timeline.md` names the child (step 4). Only `forked_from` is updated later: `close-quest` repoints it when the origin is closed out and renamed. The other two are not; when either session is closed out and its folder renamed, they go stale but stay readable — the slug inside each one still identifies the session — and that is accepted.

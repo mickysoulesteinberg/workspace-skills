@@ -26,7 +26,7 @@ You can also just say you'll pick the quest up later, and the agent may run it f
 | **Confirm** | Is the "next step" in the notes still the real next step? |
 | **Cold read** | Could someone with no background follow the notes? |
 
-**Stopping for the day** runs the first four in that order, then offers the cold read and says why it might be worth it. In a cold read, a second agent that hasn't seen your chat reads only the notes and says back the goal and the next step, so you can see what a newcomer would take away. You can say no.
+**Stopping for the day** runs the first four in that order, then runs the cold read when enough has changed to make it worth it, and says why. In a cold read, a second agent that hasn't seen your chat reads only the notes and says back the goal and the next step, so you can see what a newcomer would take away.
 
 ## What it changes
 

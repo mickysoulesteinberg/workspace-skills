@@ -21,12 +21,12 @@ Type `/close-quest` in the chat where the quest is open, or give it the quest's 
    | Move out | It belongs somewhere permanent, or some other piece of work will need it |
 
    Obvious deletes come as one yes-or-no.
-3. **You approve the summary** (second stop). The agent shows the full draft: a title, a one-line summary, what was done, open tasks, and the files created and edited. It also lists any tasks elsewhere in your project that this quest finished, offering to mark them done.
+3. **You approve the summary** (second stop). The agent shows the full draft: a title, a one-line summary, what was done, open tasks, and the files created and edited. It also lists any tasks elsewhere in your project that this quest finished, offering to mark them done, and flags anything it thinks you might want to weigh in on before the quest closes.
 4. **The agent writes it.** It removes the working notes (`current-state.md`, `session.yml` and `followups.md`), renames the folder from `_current-1102-reorganize-docs` to a dated name like `20261102-0930-reorganize-docs` (full date and time from when the quest started), and writes the summary inside. `timeline.md` stays. Then it marks done the tasks you approved and runs any after-write steps from your settings.
 
 Nothing besides the files you confirmed in step 2 changes until you approve the draft in step 3. It doesn't make a git commit unless you or your settings ask for one.
 
-If you split off a tangent from this quest earlier, the agent updates the tangent's link back to it. When it can't tell which tangent is meant, it asks.
+If you split off tangents from this quest earlier, the agent updates each tangent's link back to it.
 
 ## Adding your own steps
 

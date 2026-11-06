@@ -43,9 +43,8 @@ Optional args (any order):
                        (child) session's session.yml. PATH is the origin
                        session's folder, prefixed with its project folder's
                        name (e.g. `my-project/logs/agent-sessions/_current-1103-foo`).
-                       Nothing updates it later, so it goes stale when the
-                       origin is closed out and renamed; the slug inside it
-                       still identifies the origin.
+                       close-quest repoints it when the origin is closed
+                       out and renamed.
 
 Example:
   python3 session-bootstrap.py --root ~/projects/my-project --show-settings

@@ -4,7 +4,7 @@ description: >
   Mid-session maintenance for the session directory quest creates and a close-out skill later
   finalizes. Five passes, each with its own trigger and cost: Checkpoint (write down what has been
   decided), Sweep (curation rules and coherence), Reconcile (Resources rows), Confirm (is the stated
-  next step true), and an opt-in cold read for when the file is about to be left for a stranger.
+  next step true), and a cold read for when the file is about to be left for a stranger.
 when_to_use: >
   Use for /tidy-quest, or when the user says they'll continue the quest later and want
   a clean hand-off. NOT for starting, continuing or forking a session (quest) or closing one out.
@@ -62,11 +62,11 @@ Each pass has its own trigger and its own cost. They are not a fixed bundle — 
 | **Sweep** | comprehensibility (weak) | cheap | when `current-state.md` changed since the last Checkpoint line in `timeline.md`, whoever changed it |
 | **Reconcile** | every file a pass wrote to has a Resources row | seconds | when a pass wrote to a file |
 | **Confirm** | truth | cheap | stopping, forking |
-| **Cold read** | comprehensibility (strong) | one read-only agent spawn | **opt-in** — offered, never automatic |
+| **Cold read** | comprehensibility (strong) | one read-only agent spawn | stopping, when enough changed to be worth a spawn; or on request |
 
 **Has `current-state.md` changed?** Within the conversation, you know whether it was edited. After a resume or compaction, compare the file's last-modified time with the time on the latest Checkpoint line in `timeline.md`. With no Checkpoint line yet, treat the file as changed.
 
-**Stopping for the day** runs Checkpoint → Sweep → Reconcile → Confirm, then *offers* the cold read with its reason stated. That is the only named combination.
+**Stopping for the day** runs Checkpoint → Sweep → Reconcile → Confirm, then the cold read when it's worth it (§ Cold read). That is the only named combination.
 
 **The user invokes this skill.** It never fires itself on a judgement that the session looks like it is winding down.
 
@@ -144,7 +144,7 @@ Every file a pass wrote to has a row in `current-state.md`'s Resources table, ca
 
 Files nobody is maintaining stay undeclared, which is an accurate description of them. The cost is that this pass says nothing about whether the directory as a whole is accounted for.
 
-Each row also says **when to read** the file; `session-files.md` § When to read defines the values. New rows default to `if relevant`. Check each row marked `every time`, not only new ones: does a resuming agent need the whole file each time? If only a small part of a large file matters, propose summarizing that part in Context and switching the row to `if relevant`; change it only once the user agrees.
+Each row also says **when to read** the file; `session-files.md` § When to read defines the values. New rows default to `if relevant`. Check each row marked `every time`, not only new ones: does a resuming agent need the whole file each time? If only a small part of a large file matters, summarize that part in Context, switch the row to `if relevant`, and report the change in one line. For a file the user owns, propose the switch instead and make it once they agree.
 
 ## Confirm
 
@@ -163,7 +163,7 @@ A bare "does this look right?" does not fix this. It is the same self-report tha
 
 `cold-read.md`. This skill's declared question: **what is the current goal, and what is the next step?** Hand over `current-state.md` alone — no other session files.
 
-**Opt-in.** Offer it with the reason stated rather than firing it or waiting to be asked — "eleven items landed this pass and three of them only exist in prose I wrote; worth a cold read before you stop?" How much of `current-state.md` changed since the last Checkpoint is the signal, whether Checkpoint or the work wrote it: two small edits do not need it, eleven probably do.
+**When it runs.** On stopping for the day, run it when enough of `current-state.md` changed since the last Checkpoint to be worth an agent spawn — two small edits don't need it, eleven probably do — and give the reason in the report. Otherwise run it when the user asks.
 
 Run it **after** every pass that can still edit `current-state.md`. It is the most expensive step available here, so an edit landing behind it costs a second full spawn, not just a stale verdict.
 
@@ -174,5 +174,5 @@ All in `${CLAUDE_SKILL_DIR}/../quest/references/`.
 | File | Load when |
 |------|-----------|
 | `curation-rules.md` | Sweep |
-| `cold-read.md` | Cold read only — it is opt-in, so do not load it by default |
+| `cold-read.md` | Cold read only — do not load it by default |
 | `session-files.md` | Checkpoint, when routing a "for later" item — carries the test for which kind of "later" it is; Reconcile, for ownership values |
